@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css" />
+    <style>
+
+
+    </style>
+</head>
+
+<body>
+    <h1>Smart Event Dashboard</h1>
+    <div id="main">
+        
+        <div id="part1">
+            <form id="b1">
+                <h2>Add New Event</h2>
+                <label for="">Enter Event</label>
+                <input type="text" value="" id="eName">
+                <br>
+                <br>
+        
+                <label for="">Enter Date</label>
+                <input type="date" value="" id="eDate">
+                <br>
+                <br>
+            
+                <label for="">Category</label>
+                <select name="" id="eOpt">
+                    <option value="a">a</option>
+                    <option value="b">b</option>
+                    <option value="c">c</option>
+                    <option value="d">d</option>
+                </select>
+                <br>
+                <br>
+                <label for="">Description</label>
+
+                <textarea name="" id="eDis"></textarea>
+                <br>
+                <input type="submit">
+
+            </form>
+
+        </div>
+        <div id="part2">
+            <table>
+                <h2>My Events</h2>
+                <thead>
+                    <tr>
+                        <th>Add Simple Event</th>
+                        <th>Clear All Event</th>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    <!-- <tr>
+                <td>
+                    <div>
+                        w
+                    </div>
+                </td>
+            </tr> -->
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+    let eventArr = JSON.parse(localStorage.getItem("event")) || [];
+
+
+    document.querySelector("form").addEventListener("submit", getEvent);
+
+    displayTable(eventArr)
+
+    function getEvent(e) {
+        e.preventDefault();
+        const evName = document.querySelector("#eName").value;
+        const evData = document.querySelector("#eDate").value;
+        const evCat = document.querySelector("#eOpt").value;
+        const evDis = document.querySelector("#eDis").value;
+
+        let eventObj = {
+            evName,
+            evData,
+            evCat,
+            evDis,
+        }
+
+        eventArr.push(eventObj);
+
+        localStorage.setItem("event", JSON.stringify(eventArr));
+        console.log(eventArr);
+
+        displayTable(eventArr);
+
+    }
+
+
+
+    // <tr>
+    //     <div>
+    //         <td>
+    //       
+    //         </td>
+    //     </div>
+    // </tr>
+
+    function displayTable(eve) {
+        document.querySelector("tbody").innerText = "";
+        eve.forEach((a) => {
+            let row = document.createElement("tr");
+            let td1 = document.createElement("td");
+            td1.innerText = a.evName
+
+            let td2 = document.createElement("td");
+            td2.innerText = a.evData
+
+            let td3 = document.createElement("td");
+            td3.innerText = a.evCat
+
+            let td4 = document.createElement("td");
+            td4.innerText = a.evDis
+
+            let d1 = document.createElement("div");
+            d1.append(td1, td2, td3, td4)
+            row.append(d1)
+
+            document.querySelector("tbody").append(row)
+
+
+        })
+    }
+
+
+
+</script>
